@@ -1,7 +1,7 @@
 :root {
-    --brandeis-blue: #256eff;
-    --oxford-blue: #00072d;
-    --tea-green: #cbf3d2;
-    --gamboge: #efa00b;
-    --syracuse-red-orange: #d65108;
-  }
+  --primary-color: #00072d;     /* Oxford Blue */
+  --secondary-color: #cbf3d2;   /* Tea Green */
+  --accent-color: #256eff;      /* Brandeis Blue */
+  --highlight-color: #efa00b;   /* Gamboge */
+  --tertiary-color: #d65108;    /* Syracuse Red-Orange */
+}
