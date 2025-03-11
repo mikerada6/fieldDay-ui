@@ -3,10 +3,9 @@ import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,  // Mark this component as standalone
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css'],
+  imports: [RouterOutlet]  // Import RouterOutlet so <router-outlet> is recognized
 })
-export class AppComponent {
-  title = 'fieldDay-ui';
-}
+export class AppComponent { }
