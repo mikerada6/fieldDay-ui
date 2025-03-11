@@ -1,17 +1,71 @@
-<div class="login-container">
-    <h2>Login</h2>
-    <form (ngSubmit)="onLogin()">
-      <div>
-        <label for="username">Username:</label>
-        <input id="username" [(ngModel)]="username" name="username" required>
+<div class="login-wrapper">
+  <main class="login-main">
+    <header class="login-header">
+      <div class="logo-container">
+        <img src="/assets/images/school-logo-optimized.png"
+             alt="Thrive Charter School Logo"
+             class="school-logo">
+        <h1 class="school-name">Thrive Charter School</h1>
       </div>
-      <div>
-        <label for="password">Password:</label>
-        <input id="password" type="password" [(ngModel)]="password" name="password" required>
-      </div>
-      <button type="submit">Login</button>
-    </form>
-    <div *ngIf="errorMessage" class="error">
-      {{ errorMessage }}
+      <p class="event-subtitle">International Games</p>
+    </header>
+
+    <div class="login-container">
+      <form class="login-form" (ngSubmit)="onLogin()">
+        <div class="form-group">
+          <label for="username" class="input-label">
+            Username
+            <input
+              id="username"
+              type="text"
+              [(ngModel)]="username"
+              name="username"
+              class="form-input"
+              required
+              placeholder="athlete123"
+              aria-label="Enter your username"
+            />
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="input-label">
+            Password
+            <input
+              id="password"
+              type="password"
+              [(ngModel)]="password"
+              name="password"
+              class="form-input"
+              required
+              placeholder="••••••••"
+              aria-label="Enter your password"
+            />
+          </label>
+        </div>
+
+        <button type="submit" class="login-button">
+          <span>Start the Games!</span>
+          <svg aria-hidden="true" class="button-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clip-rule="evenodd" />
+          </svg>
+        </button>
+
+        <!-- Error message displayed when login fails -->
+        <div *ngIf="errorMessage" class="error-message" role="alert">
+          {{ errorMessage }}
+        </div>
+
+        <div class="form-footer">
+          <a href="#" class="forgot-password" aria-label="Recover forgotten password">
+            Forgot your password?
+          </a>
+        </div>
+      </form>
     </div>
-  </div>
+  </main>
+
+  <footer class="page-footer">
+    <p class="footer-text">🏆 Celebrating Sportsmanship &amp; Team Spirit 🏅</p>
+  </footer>
+</div>

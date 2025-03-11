@@ -1,37 +1,254 @@
-.login-container {
-    width: 300px;
-    margin: 50px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+:host {
+  display: block;
+  box-sizing: border-box;
+}
+
+/* Ensure all elements use border-box for width calculations */
+:host *, :host *:before, :host *:after {
+  box-sizing: inherit;
+}
+
+/* Base container: full viewport height with Flexbox */
+:host .login-wrapper {
+  background-color: var(--oxford-blue);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  font-family: 'Arial Rounded MT Bold', system-ui, sans-serif;
+}
+
+/* Main content takes available space */
+:host .login-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 480px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Header styles */
+:host .login-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+:host .logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+:host .school-logo {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
+}
+
+:host .school-logo:hover {
+  transform: scale(1.05) rotate(-3deg);
+}
+
+:host .school-name {
+  font-size: 2.4rem;
+  color: var(--tea-green);
+  margin: 0;
+  letter-spacing: -0.5px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+:host .event-subtitle {
+  font-size: 1.6rem;
+  color: var(--syracuse-red-orange);
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Form container */
+:host .login-container {
+  background: var(--tea-green);
+  padding: 2.5rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Form elements */
+:host .login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+:host .input-label {
+  display: block;
+  font-weight: 600;
+  color: var(--oxford-blue);
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+/* Inputs now use border-box so padding is included */
+:host .form-input {
+  width: 100%;
+  padding: 1rem 1.5rem 1rem 1rem;
+  border: 2px solid var(--brandeis-blue);
+  border-radius: 0.8rem;
+  font-size: 1rem;
+  background: white;
+  transition: all 0.2s ease;
+}
+
+:host .form-input::placeholder {
+  padding-left: 0.2rem;
+  color: #94a3b8;
+}
+
+:host .form-input:focus {
+  outline: none;
+  border-color: var(--syracuse-red-orange);
+  box-shadow: 0 0 0 3px rgba(214, 81, 8, 0.2);
+}
+
+/* Login button */
+:host .login-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 1.2rem;
+  background: var(--gamboge);
+  color: var(--oxford-blue);
+  border: none;
+  border-radius: 0.8rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 1rem;
+}
+
+:host .login-button:hover {
+  background: var(--syracuse-red-orange);
+  color: white;
+  transform: translateY(-2px);
+}
+
+:host .button-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  transition: transform 0.2s ease;
+}
+
+:host .login-button:hover .button-icon {
+  transform: translateX(3px);
+}
+
+/* Error message styling */
+:host .error-message {
+  color: red;
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Form footer */
+:host .form-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+:host .forgot-password {
+  color: var(--brandeis-blue);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+:host .forgot-password:hover {
+  color: var(--syracuse-red-orange);
+}
+
+/* Footer: Sticky at the bottom using Flexbox */
+:host .page-footer {
+  margin-top: auto;
+  padding: 1.5rem 0 0;
+  border-top: 2px solid rgba(203, 243, 210, 0.1);
+  text-align: center;
+}
+
+:host .footer-text {
+  color: var(--tea-green);
+  font-size: 0.9rem;
+  margin: 0;
+  opacity: 0.9;
+}
+
+/* Responsive design tweaks */
+/* For tablets and small laptops */
+@media (max-width: 768px) {
+  :host .login-wrapper {
+    padding: 1.5rem;
   }
-  
-  .login-container h2 {
+  :host .logo-container {
+    flex-direction: column;
     text-align: center;
+    gap: 1rem;
   }
-  
-  .login-container div {
-    margin-bottom: 15px;
+  :host .school-name {
+    font-size: 2rem;
   }
-  
-  .login-container label {
-    display: block;
-    margin-bottom: 5px;
+  :host .event-subtitle {
+    font-size: 1.3rem;
   }
-  
-  .login-container input {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
+  :host .school-logo {
+    width: 100px;
+    height: 100px;
   }
-  
-  button {
-    width: 100%;
-    padding: 10px;
+  :host .login-container {
+    padding: 1.8rem;
   }
-  
-  .error {
-    color: red;
-    text-align: center;
+  :host .login-button {
+    font-size: 1rem;
+    padding: 1rem;
   }
-  
+}
+
+/* For average phones */
+@media (max-width: 480px) {
+  :host .login-wrapper {
+    padding: 1rem;
+  }
+  :host .login-container {
+    padding: 1.5rem;
+  }
+  :host .school-logo {
+    width: 80px;
+    height: 80px;
+  }
+  :host .school-name {
+    font-size: 1.8rem;
+  }
+  :host .event-subtitle {
+    font-size: 1.2rem;
+  }
+  :host .input-label {
+    font-size: 0.9rem;
+  }
+  :host .form-input {
+    font-size: 0.9rem;
+    padding: 0.8rem 1.2rem;
+  }
+  :host .login-button {
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
+}

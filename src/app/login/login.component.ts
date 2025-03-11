@@ -7,11 +7,12 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  standalone: true,   // Mark as standalone
-  imports: [CommonModule, FormsModule, HttpClientModule], // Added CommonModule here
+  standalone: true,
+  imports: [CommonModule, FormsModule, HttpClientModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
+
 export class LoginComponent {
 
   username: string = '';
