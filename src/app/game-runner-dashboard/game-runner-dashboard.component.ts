@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 interface Game {
+  id: number;
   name: string;
   type: 'point' | 'time';
   highScoreWins: boolean;
@@ -83,7 +84,6 @@ export class GameRunnerDashboardComponent implements OnInit {
 
   private getHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
-    console.log("The token is " + token);
     return new HttpHeaders().set('Authorization', `Bearer ${token}`);
   }
 
@@ -95,8 +95,8 @@ export class GameRunnerDashboardComponent implements OnInit {
       { headers: this.getHeaders() }
     ).subscribe({
       next: (response) => {
-        console.log(response)
         this.game = {
+          id: response.data.game.id,
           name: response.data.game.name,
           type: response.data.game.type.toLowerCase() as 'point' | 'time',
           highScoreWins: response.data.game.highScoreWins,
@@ -174,33 +174,56 @@ export class GameRunnerDashboardComponent implements OnInit {
   }
 
   submitScoreUpdate(): void {
-    if (!this.selectedTeam) return;
+    // Ensure both team and game are defined
+    if (!this.selectedTeam || !this.game) {
+      this.errorMessage = 'Missing team or game data.';
+      return;
+    }
+  
+    // Error out if game.id is null or undefined
+    if (this.game.id == null) {
+      this.errorMessage = 'Game ID is missing. Cannot update score.';
+      return;
+    }
+  
+  
     let newScore: number;
-    if (this.game?.type === 'point') {
-      newScore = this.editScoreValue || 0;
-    } else if (this.game?.type === 'time') {
-      const minutes = this.editMinutes || 0;
-      const seconds = this.editSeconds || 0;
-      const milliseconds = this.editMilliseconds || 0;
+    if (this.game.type === 'point') {
+      newScore = this.editScoreValue ?? 0;
+    } else if (this.game.type === 'time') {
+      const minutes = this.editMinutes ?? 0;
+      const seconds = this.editSeconds ?? 0;
+      const milliseconds = this.editMilliseconds ?? 0;
       newScore = minutes * 60000 + seconds * 1000 + milliseconds;
     } else {
       newScore = 0;
     }
-    // Update the team score locally
-    this.selectedTeam.score = newScore;
-    console.log("The team has scored " +  newScore)
-    // Submit update via HTTP PUT
-    // this.http.put(`/api/teams/${this.selectedTeam.id}/score`, { score: newScore })
-    //   .subscribe({
-    //     next: () => {
-    //       this.closeEditScore();
-    //     },
-    //     error: (err) => {
-    //       console.error(err);
-    //       this.errorMessage = `Failed to update score for ${this.selectedTeam?.name}.`;
-    //     }
-    //   });
+  
+    const payload = {
+      gameId: this.game.id,
+      teamId: this.selectedTeam.id,
+      scoreValue: newScore
+    };
+  
+    this.http.post(
+      `http://localhost:8080/api/v1/games/${this.game.id}/scores`,
+      payload,
+      { headers: this.getHeaders() }
+    ).subscribe({
+      next: () => {
+        // Use non-null assertion to tell TypeScript that selectedTeam is not null here
+        this.selectedTeam!.score = newScore;
+        this.closeEditScore();
+      },
+      error: (err) => {
+        console.error(err);
+        this.errorMessage = `Failed to update score for ${this.selectedTeam?.name}.`;
+      }
+    });
   }
+  
+  
+  
 
   formatTime(score: number | undefined): string {
     if (score === undefined || score === null) return '00:00.000';

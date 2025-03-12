@@ -16,17 +16,14 @@
   text-align: center;
   margin-bottom: 2rem;
 }
-
 .dashboard-header h1 {
   font-size: 2.4rem;
   margin: 0.5rem 0;
 }
-
 .dashboard-header p {
   font-size: 1.2rem;
   margin: 0.5rem 0;
 }
-
 .instructions-btn {
   padding: 0.8rem 1.2rem;
   background: var(--highlight-color);
@@ -37,7 +34,6 @@
   margin-top: 1rem;
   transition: background 0.3s ease;
 }
-
 .instructions-btn:hover {
   background: var(--tertiary-color);
   color: white;
@@ -79,7 +75,6 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
-
 .game-details-header {
   background: var(--highlight-color);
   color: white;
@@ -87,29 +82,24 @@
   text-align: center;
   border-bottom: 2px solid var(--tertiary-color);
 }
-
 .game-details-header h2 {
   margin: 0;
   font-size: 1.8rem;
 }
-
 .game-details-header .game-name {
   margin: 0.5rem 0 0;
   font-size: 1.4rem;
   color: var(--tertiary-color);
 }
-
 .game-info-content {
   padding: 1rem;
 }
-
 .game-info-content p {
   margin: 0.5rem 0;
   font-size: 1rem;
   display: flex;
   align-items: center;
 }
-
 .game-info-content .icon {
   margin-right: 0.5rem;
   font-size: 1.2rem;
@@ -123,7 +113,6 @@
   border-radius: var(--border-radius);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
-
 .teams-list h2 {
   text-align: center;
   font-size: 2rem;
@@ -132,7 +121,7 @@
   margin-bottom: 1.5rem;
 }
 
-/* Teams Container for Flex Layout */
+/* Teams Container */
 .teams-container {
   display: flex;
   flex-wrap: wrap;
@@ -152,7 +141,6 @@
   display: flex;
   flex-direction: column;
 }
-
 .team-header {
   display: flex;
   align-items: center;
@@ -160,7 +148,6 @@
   color: white;
   padding: 0.5rem 1rem;
 }
-
 .team-header .team-flag img {
   width: 50px;
   height: 50px;
@@ -168,40 +155,37 @@
   border-radius: 50%;
   margin-right: 1rem;
 }
-
 .team-name-section h3 {
   margin: 0;
   font-size: 1.5rem;
 }
-
+.no-score {
+  color: #888;  /* Grey text to indicate no score */
+  font-style: italic;
+}
 .team-name-section p {
   margin: 0;
   font-size: 0.9rem;
 }
-
 .team-details {
   padding: 1rem;
   flex: 1;
 }
-
 .team-details p {
   margin: 0.5rem 0;
   font-size: 1rem;
   display: flex;
   align-items: center;
 }
-
 .team-details .icon {
   margin-right: 0.5rem;
   font-size: 1.2rem;
 }
-
 .team-score {
   margin-top: 1rem;
   display: flex;
   justify-content: center;
 }
-
 .edit-btn {
   background: var(--highlight-color);
   color: white;
@@ -211,7 +195,6 @@
   cursor: pointer;
   transition: background 0.3s ease;
 }
-
 .edit-btn:hover {
   background: var(--tertiary-color);
 }
@@ -230,7 +213,6 @@
   padding: 1rem;
   z-index: 1000;
 }
-
 .instructions-modal .modal-content {
   background: var(--secondary-color);
   color: var(--primary-color);
@@ -240,7 +222,6 @@
   width: 100%;
   text-align: center;
 }
-
 .instructions-modal button {
   margin-top: 1rem;
   padding: 0.5rem 1rem;
@@ -251,7 +232,6 @@
   cursor: pointer;
   transition: background 0.3s ease;
 }
-
 .instructions-modal button:hover {
   background: var(--tertiary-color);
 }
@@ -270,7 +250,6 @@
   padding: 1rem;
   z-index: 1000;
 }
-
 .score-edit-modal .modal-content {
   background: var(--secondary-color);
   color: var(--primary-color);
@@ -281,12 +260,10 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   animation: fadeIn 0.3s ease-out;
 }
-
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
 }
-
 .score-edit-modal .modal-header {
   display: flex;
   justify-content: space-between;
@@ -295,12 +272,10 @@
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
 }
-
 .score-edit-modal .modal-header h2 {
   margin: 0;
   font-size: 1.5rem;
 }
-
 .score-edit-modal .close-btn {
   background: transparent;
   border: none;
@@ -309,35 +284,29 @@
   color: var(--primary-color);
   line-height: 1;
 }
-
 .score-edit-modal .modal-body {
   margin-bottom: 1rem;
 }
-
 .score-edit-modal .score-input-group {
   margin-bottom: 1rem;
   display: flex;
   flex-direction: column;
 }
-
 .score-edit-modal .score-input-group label {
   font-size: 1rem;
   margin-bottom: 0.3rem;
 }
-
 .score-edit-modal .score-input-group input {
   padding: 0.5rem;
   border: 1px solid var(--accent-color);
   border-radius: 4px;
   font-size: 1rem;
 }
-
 .score-edit-modal .modal-actions {
   display: flex;
   justify-content: flex-end;
   gap: 0.5rem;
 }
-
 .score-edit-modal .modal-actions button {
   padding: 0.5rem 1rem;
   border: none;
@@ -346,19 +315,23 @@
   font-weight: 600;
   transition: background 0.3s ease;
 }
-
 .score-edit-modal .save-btn {
   background: var(--highlight-color);
   color: white;
 }
-
 .score-edit-modal .cancel-btn {
   background: var(--accent-color);
   color: white;
 }
-
 .score-edit-modal .modal-actions button:hover {
   filter: brightness(0.9);
+}
+/* Disabled Save Button */
+.score-edit-modal .save-btn:disabled {
+  background: #ccc;
+  color: #666;
+  cursor: not-allowed;
+  filter: none;
 }
 
 /* Responsive Adjustments */
@@ -379,7 +352,6 @@
     width: calc(50% - 1rem);
   }
 }
-
 @media (max-width: 480px) {
   .dashboard-header h1 {
     font-size: 1.8rem;
