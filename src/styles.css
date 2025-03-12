@@ -4,4 +4,7 @@
   --accent-color: #256eff;      /* Brandeis Blue */
   --highlight-color: #efa00b;   /* Gamboge */
   --tertiary-color: #d65108;    /* Syracuse Red-Orange */
+  --text-muted: #64748b;
+  --border-radius: 12px;
 }
+
