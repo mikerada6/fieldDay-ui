@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 interface Game {
   id: number;
   name: string;
-  type: 'point' | 'time';
+  type: 'points' | 'time';
   highScoreWins: boolean;
   location: string;
   equipment: string;
@@ -98,7 +98,7 @@ export class GameRunnerDashboardComponent implements OnInit {
         this.game = {
           id: response.data.game.id,
           name: response.data.game.name,
-          type: response.data.game.type.toLowerCase() as 'point' | 'time',
+          type: response.data.game.type.toLowerCase() as 'points' | 'time',
           highScoreWins: response.data.game.highScoreWins,
           location: response.data.game.location,
           equipment: response.data.game.equipment,
@@ -154,7 +154,7 @@ export class GameRunnerDashboardComponent implements OnInit {
   openEditScore(team: Team): void {
     this.selectedTeam = team;
     this.editScoreModalOpen = true;
-    if (this.game?.type === 'point') {
+    if (this.game?.type === 'points') {
       this.editScoreValue = team.score || 0;
     } else if (this.game?.type === 'time') {
       const totalMs = team.score || 0;
@@ -188,7 +188,7 @@ export class GameRunnerDashboardComponent implements OnInit {
   
   
     let newScore: number;
-    if (this.game.type === 'point') {
+    if (this.game.type === 'points') {
       newScore = this.editScoreValue ?? 0;
     } else if (this.game.type === 'time') {
       const minutes = this.editMinutes ?? 0;
