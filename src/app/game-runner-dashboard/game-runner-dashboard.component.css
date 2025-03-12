@@ -1,15 +1,14 @@
 :host {
   display: block;
   font-family: 'Arial', sans-serif;
-  padding: 2rem;
 }
 
-/* Dashboard Wrapper with updated font color */
+/* Dashboard Wrapper */
 .dashboard-wrapper {
   background-color: var(--primary-color);
   min-height: 100vh;
   padding: 2rem;
-  color: #ffffff; /* Changed font color to white for better contrast */
+  color: var(--secondary-color);
 }
 
 /* Dashboard Header */
@@ -78,9 +77,7 @@
   color: var(--primary-color);
   border-radius: var(--border-radius);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  margin-bottom: 1.5rem;
   overflow: hidden;
-
 }
 
 .game-details-header {
@@ -99,10 +96,9 @@
 .game-details-header .game-name {
   margin: 0.5rem 0 0;
   font-size: 1.4rem;
-  color: white;
+  color: var(--tertiary-color);
 }
 
-/* Content Area */
 .game-info-content {
   padding: 1rem;
 }
@@ -119,25 +115,29 @@
   font-size: 1.2rem;
 }
 
-.game-details p {
-  margin: 0.5rem 0;
-}
-
 /* Teams List Section */
 .teams-list {
   background: var(--secondary-color);
-  color: var(--primary-color); /* Dark text on light background */
+  color: var(--primary-color);
   padding: 1.5rem;
   border-radius: var(--border-radius);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .teams-list h2 {
-  margin-bottom: 1rem;
-  font-size: 2rem;
   text-align: center;
+  font-size: 2rem;
   border-bottom: 2px solid var(--highlight-color);
   padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Teams Container for Flex Layout */
+.teams-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
 }
 
 /* Team Card */
@@ -145,9 +145,10 @@
   background: white;
   color: var(--primary-color);
   border-radius: var(--border-radius);
-  margin-bottom: 1.5rem;
-  overflow: hidden;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  width: calc(33% - 1rem);
+  min-width: 280px;
+  margin-bottom: 1.5rem;
   display: flex;
   flex-direction: column;
 }
@@ -178,53 +179,30 @@
   font-size: 0.9rem;
 }
 
-.team-card:last-child {
-  margin-bottom: 0;
-}
-
-.team-flag img {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  margin-right: 1rem;
-}
-
 .team-details {
   padding: 1rem;
+  flex: 1;
 }
 
 .team-details p {
   margin: 0.5rem 0;
   font-size: 1rem;
+  display: flex;
+  align-items: center;
 }
 
 .team-details .icon {
   margin-right: 0.5rem;
+  font-size: 1.2rem;
 }
 
-.team-info {
-  flex: 1;
-  padding: 1rem;
-}
-
-.team-info h3 {
-  margin: 0;
-  font-size: 1.5rem;
-}
-
-.team-info p {
-  margin: 0.2rem 0;
-}
-
-/* Score Editing */
 .team-score {
   margin-top: 1rem;
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
 }
 
-.edit-btn, .save-btn {
+.edit-btn {
   background: var(--highlight-color);
   color: white;
   border: none;
@@ -233,18 +211,12 @@
   cursor: pointer;
   transition: background 0.3s ease;
 }
-.edit-btn:hover, .save-btn:hover {
+
+.edit-btn:hover {
   background: var(--tertiary-color);
 }
 
-.team-score input {
-  width: 60px;
-  padding: 0.3rem;
-  border: 1px solid var(--accent-color);
-  border-radius: 4px;
-}
-
-/* Modal Styles */
+/* Instructions Modal */
 .instructions-modal {
   position: fixed;
   top: 0;
@@ -259,9 +231,9 @@
   z-index: 1000;
 }
 
-.modal-content {
+.instructions-modal .modal-content {
   background: var(--secondary-color);
-  color: var(--primary-color); /* Ensure modal text is clearly visible */
+  color: var(--primary-color);
   padding: 2rem;
   border-radius: var(--border-radius);
   max-width: 600px;
@@ -269,25 +241,22 @@
   text-align: center;
 }
 
-.modal-content h2 {
-  margin-top: 0;
-  font-size: 2rem;
-}
-
-.modal-content p {
-  margin: 1rem 0;
-}
-
-.modal-content button {
+.instructions-modal button {
   margin-top: 1rem;
   padding: 0.5rem 1rem;
   background: var(--highlight-color);
+  color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: var(--border-radius);
   cursor: pointer;
-  font-weight: bold;
+  transition: background 0.3s ease;
 }
 
+.instructions-modal button:hover {
+  background: var(--tertiary-color);
+}
+
+/* Score Edit Modal */
 .score-edit-modal {
   position: fixed;
   top: 0;
@@ -302,24 +271,23 @@
   z-index: 1000;
 }
 
-.modal-content {
+.score-edit-modal .modal-content {
   background: var(--secondary-color);
   color: var(--primary-color);
   padding: 1.5rem;
   border-radius: var(--border-radius);
   max-width: 500px;
-  width: 100%;
+  width: 90%;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   animation: fadeIn 0.3s ease-out;
 }
 
-/* Fade-in Animation */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-.modal-header {
+.score-edit-modal .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -328,12 +296,12 @@
   padding-bottom: 0.5rem;
 }
 
-.modal-header h2 {
+.score-edit-modal .modal-header h2 {
   margin: 0;
   font-size: 1.5rem;
 }
 
-.close-btn {
+.score-edit-modal .close-btn {
   background: transparent;
   border: none;
   font-size: 1.5rem;
@@ -342,35 +310,35 @@
   line-height: 1;
 }
 
-.modal-body {
+.score-edit-modal .modal-body {
   margin-bottom: 1rem;
 }
 
-.score-input-group {
+.score-edit-modal .score-input-group {
   margin-bottom: 1rem;
   display: flex;
   flex-direction: column;
 }
 
-.score-input-group label {
+.score-edit-modal .score-input-group label {
   font-size: 1rem;
   margin-bottom: 0.3rem;
 }
 
-.score-input-group input {
+.score-edit-modal .score-input-group input {
   padding: 0.5rem;
   border: 1px solid var(--accent-color);
   border-radius: 4px;
   font-size: 1rem;
 }
 
-.modal-actions {
+.score-edit-modal .modal-actions {
   display: flex;
   justify-content: flex-end;
   gap: 0.5rem;
 }
 
-.modal-actions button {
+.score-edit-modal .modal-actions button {
   padding: 0.5rem 1rem;
   border: none;
   border-radius: var(--border-radius);
@@ -379,16 +347,64 @@
   transition: background 0.3s ease;
 }
 
-.save-btn {
+.score-edit-modal .save-btn {
   background: var(--highlight-color);
   color: white;
 }
 
-.cancel-btn {
+.score-edit-modal .cancel-btn {
   background: var(--accent-color);
   color: white;
 }
 
-.modal-actions button:hover {
+.score-edit-modal .modal-actions button:hover {
   filter: brightness(0.9);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .dashboard-wrapper {
+    padding: 1rem;
+  }
+  .dashboard-header h1 {
+    font-size: 2rem;
+  }
+  .dashboard-header p {
+    font-size: 1rem;
+  }
+  .teams-list h2 {
+    font-size: 1.8rem;
+  }
+  .team-card {
+    width: calc(50% - 1rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-header h1 {
+    font-size: 1.8rem;
+  }
+  .dashboard-header p {
+    font-size: 0.9rem;
+  }
+  .teams-list h2 {
+    font-size: 1.6rem;
+  }
+  .team-card {
+    width: 100%;
+  }
+  .modal-content {
+    padding: 1rem;
+  }
+  .modal-header h2 {
+    font-size: 1.3rem;
+  }
+  .score-input-group label,
+  .score-input-group input {
+    font-size: 0.9rem;
+  }
+  .modal-actions button {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
 }

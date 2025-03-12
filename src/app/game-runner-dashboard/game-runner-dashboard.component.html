@@ -18,6 +18,7 @@
 
   <!-- Main Dashboard Content -->
   <div *ngIf="!loading && !errorMessage" class="dashboard-content">
+    <!-- Game Details Section -->
     <section class="game-details" *ngIf="game">
       <div class="game-details-header">
         <h2>Game Information</h2>
@@ -31,35 +32,34 @@
       </div>
     </section>
 
+    <!-- Teams List Section -->
     <section class="teams-list" *ngIf="teams && teams.length">
       <h2>Teams</h2>
-      <div class="team-card" *ngFor="let team of teams">
-        <!-- Team Header: Flag, Name, and Current Score -->
-        <div class="team-header">
-          <div class="team-flag">
-            <img [src]="team.flagUrl" [alt]="team.name + ' flag'" />
+      <div class="teams-container">
+        <div class="team-card" *ngFor="let team of teams">
+          <div class="team-header">
+            <div class="team-flag">
+              <img [src]="team.flagUrl" [alt]="team.name + ' flag'" />
+            </div>
+            <div class="team-name-section">
+              <h3>{{ team.name }}</h3>
+              <p>
+                <span class="icon">⭐</span>
+                Score:
+                {{ game?.type === 'time' ? formatTime(team.score) : (team.score || 0) }}
+              </p>
+            </div>
           </div>
-          <div class="team-name-section">
-            <h3>{{ team.name }}</h3>
-            <p>
-              <span class="icon">⭐</span>
-              Score: 
-              {{ game?.type === 'time' ? formatTime(team.score) : (team.score || 0) }}
-            </p>
-          </div>
-        </div>
-    
-        <!-- Team Details: Captain, Chaperone, and Edit Button -->
-        <div class="team-details">
-          <p><span class="icon">👤</span> <strong>Captain:</strong> {{ team.teamCaptain }}</p>
-          <p><span class="icon">👥</span> <strong>Chaperone:</strong> {{ team.teamChaperon }}</p>
-          <div class="team-score">
-            <button class="edit-btn" (click)="openEditScore(team)">Edit Score</button>
+          <div class="team-details">
+            <p><span class="icon">👤</span> <strong>Captain:</strong> {{ team.teamCaptain }}</p>
+            <p><span class="icon">👨‍🏫</span> <strong>Teacher:</strong> {{ team.teamChaperon }}</p>
+            <div class="team-score">
+              <button class="edit-btn" (click)="openEditScore(team)">Edit Score</button>
+            </div>
           </div>
         </div>
       </div>
     </section>
-
   </div>
 
   <!-- Instructions Modal -->
@@ -70,34 +70,34 @@
       <button (click)="toggleInstructionsModal()">Close</button>
     </div>
   </div>
-</div>
 
-<!-- Edit Score Modal -->
-<div class="score-edit-modal" *ngIf="editScoreModalOpen">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h2>Edit Score for {{ selectedTeam?.name }}</h2>
-      <button class="close-btn" (click)="closeEditScore()">&times;</button>
-    </div>
-    <div class="modal-body">
-      <!-- For Point-Based Game -->
-      <div *ngIf="game?.type === 'point'" class="score-input-group">
-        <label for="editScoreValue">Points:</label>
-        <input id="editScoreValue" type="number" [(ngModel)]="editScoreValue" name="editScoreValue" />
+  <!-- Edit Score Modal -->
+  <div class="score-edit-modal" *ngIf="editScoreModalOpen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Edit Score for {{ selectedTeam?.name }}</h2>
+        <button class="close-btn" (click)="closeEditScore()">&times;</button>
       </div>
-      <!-- For Time-Based Game -->
-      <div *ngIf="game?.type === 'time'" class="score-input-group">
-        <label for="editMinutes">Minutes:</label>
-        <input id="editMinutes" type="number" [(ngModel)]="editMinutes" name="editMinutes" />
-        <label for="editSeconds">Seconds:</label>
-        <input id="editSeconds" type="number" [(ngModel)]="editSeconds" name="editSeconds" />
-        <label for="editMilliseconds">Milliseconds:</label>
-        <input id="editMilliseconds" type="number" [(ngModel)]="editMilliseconds" name="editMilliseconds" />
+      <div class="modal-body">
+        <!-- For Point-Based Game -->
+        <div *ngIf="game?.type === 'point'" class="score-input-group">
+          <label for="editScoreValue">Points:</label>
+          <input id="editScoreValue" type="number" [(ngModel)]="editScoreValue" name="editScoreValue" />
+        </div>
+        <!-- For Time-Based Game -->
+        <div *ngIf="game?.type === 'time'" class="score-input-group">
+          <label for="editMinutes">Minutes:</label>
+          <input id="editMinutes" type="number" [(ngModel)]="editMinutes" name="editMinutes" />
+          <label for="editSeconds">Seconds:</label>
+          <input id="editSeconds" type="number" [(ngModel)]="editSeconds" name="editSeconds" />
+          <label for="editMilliseconds">Milliseconds:</label>
+          <input id="editMilliseconds" type="number" [(ngModel)]="editMilliseconds" name="editMilliseconds" />
+        </div>
       </div>
-    </div>
-    <div class="modal-actions">
-      <button class="save-btn" (click)="submitScoreUpdate()">Save</button>
-      <button class="cancel-btn" (click)="closeEditScore()">Cancel</button>
+      <div class="modal-actions">
+        <button class="save-btn" (click)="submitScoreUpdate()">Save</button>
+        <button class="cancel-btn" (click)="closeEditScore()">Cancel</button>
+      </div>
     </div>
   </div>
 </div>
