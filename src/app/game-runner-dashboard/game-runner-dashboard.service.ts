@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ApiResponse } from './models/api-response.model';
+import { GameRunnerApiResponseModel } from '../models/game-runner-api-response.model';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -18,8 +18,8 @@ export class GameRunnerDashboardService {
     return new HttpHeaders().set('Authorization', `Bearer ${token}`);
   }
 
-  getDashboardData(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/games/runner-dashboard`, { headers: this.getHeaders() });
+  getDashboardData(): Observable<GameRunnerApiResponseModel> {
+    return this.http.get<GameRunnerApiResponseModel>(`${this.apiUrl}/games/runner-dashboard`, { headers: this.getHeaders() });
   }
 
   updateTeamScore(teamId: number, score: number | undefined): Observable<any> {

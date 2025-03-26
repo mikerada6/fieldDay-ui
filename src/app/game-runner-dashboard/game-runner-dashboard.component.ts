@@ -2,8 +2,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { GameRunnerDashboardService } from './game-runner-dashboard.service';
-import { Game } from './models/game.model';
-import { Team } from './models/team.model';
+import { Game } from '../models/game.model';
+import { Team } from '../models/team.model';
 
 @Component({
   selector: 'app-game-runner-dashboard',

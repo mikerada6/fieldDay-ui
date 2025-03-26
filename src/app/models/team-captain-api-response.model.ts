@@ -1,7 +1,8 @@
-export interface ApiResponse {
-    status: number;
-    message: string;
-    data: {
+export interface TeamCaptainApiResponseModel {
+  status: number;
+  message: string;
+  data: {
+    games: Array<{
       game: {
         id: number;
         name: string;
@@ -22,6 +23,8 @@ export interface ApiResponse {
         captainName: string;
         chaperoneName: string;
       }>;
-    };
-    timestamp: string;
-  }
+      myTeamId: number;
+    }>;
+  };
+  timestamp: string;
+}

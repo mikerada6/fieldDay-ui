@@ -1,5 +1,481 @@
-.dashboard {
-    text-align: center;
-    margin-top: 50px;
+:root {
+  --primary-color: #00072d;       /* Oxford Blue */
+  --secondary-color: #cbf3d2;       /* Tea Green */
+  --accent-color: #256eff;          /* Brandeis Blue */
+  --highlight-color: #efa00b;       /* Gamboge */
+  --tertiary-color: #d65108;        /* Syracuse Red-Orange */
+  --text-muted: #64748b;
+  --border-radius: 12px;
+}
+
+/* Dashboard Wrapper & Header */
+.dashboard-wrapper {
+  padding: 0.5rem 1rem;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, var(--primary-color), #1e2153);
+  color: #ffffff;
+  min-height: 100vh;
+}
+
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.team-header-flag {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid var(--accent-color);
+}
+
+.tabs {
+  margin-top: 0.3rem;
+}
+
+.tabs button {
+  padding: 0.3rem 0.6rem;
+  margin: 0 0.2rem;
+  border: none;
+  background-color: var(--highlight-color);
+  color: var(--primary-color);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+}
+
+.tabs button.active {
+  background-color: var(--tertiary-color);
+  color: #ffffff;
+}
+
+/* Loading & Error Screens */
+.loading-screen,
+.error-screen {
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+/* Main Content Container */
+.dashboard-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* ========================
+   MY GAMES SECTION
+   ======================== */
+
+.my-games-section {
+  background: rgba(247, 247, 247, 0.95);
+  padding: 0.75rem;
+  border-radius: calc(var(--border-radius) / 2);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 0.75rem;
+  color: var(--primary-color);
+}
+
+.my-games-section h2 {
+  font-size: 1.6rem;
+  margin-bottom: 0.75rem;
+  text-align: center;
+  color: var(--primary-color);
+}
+
+/* Quick Summary Badge */
+.my-games-summary {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.summary-badge {
+  background: var(--highlight-color);
+  color: var(--primary-color);
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+/* Games List in a Grid */
+.games-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+/* Game Card Base Styling */
+.game-card {
+  position: relative; /* To position popover absolutely */
+  overflow: visible;  /* Allow popover to display outside */
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: calc(var(--border-radius) / 2);
+  padding: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  color: var(--primary-color);
+}
+
+/* Completed vs. Incomplete Cards */
+.completed-game {
+  background-color: #eafbea; /* Light green tint for completed */
+}
+.incomplete-game {
+  background-color: #ffffff;
+}
+
+/* Hover Animation on Game Card */
+.game-hover-animation {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.game-hover-animation:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Game Card Header: Title + Game Type Badge */
+.game-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.game-card-header h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  color: var(--accent-color);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.game-type {
+  font-size: 1.2rem;
+  color: var(--highlight-color);
+  background-color: rgba(239, 160, 11, 0.2);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Details Popover - appears when clicking on the game-type icon */
+.details-popover {
+  position: absolute;
+  top: calc(100% + 5px);
+  right: 0;
+  background: #ffffff;
+  color: var(--primary-color);
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  padding: 0.5rem;
+  border-radius: 4px;
+  z-index: 1000;
+  width: 220px;
+}
+
+/* Checkmark Icon for Completed Games */
+.checkmark-icon {
+  margin-left: 0.3rem;
+  color: green;
+  font-size: 1.2rem;
+}
+
+/* Objective Toggle (if used elsewhere) */
+.objective-toggle {
+  display: inline-flex;
+  align-items: center;
+  color: var(--highlight-color);
+  font-weight: bold;
+  text-decoration: none;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+.objective-toggle:hover {
+  text-decoration: underline;
+}
+
+/* ========================
+   LEADERBOARD SECTION
+   ======================== */
+
+.other-teams-section {
+  background: rgba(247, 247, 247, 0.95);
+  padding: 0.75rem;
+  border-radius: calc(var(--border-radius) / 2);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 0.75rem;
+  color: var(--primary-color);
+}
+
+.other-teams-section h2 {
+  font-size: 1.6rem;
+  margin-bottom: 0.75rem;
+  text-align: center;
+  color: var(--primary-color);
+}
+
+/* Sidebar & Details Layout */
+.sidebar-container {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.game-sidebar {
+  width: 30%;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: calc(var(--border-radius) / 2);
+  padding: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.game-sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.game-sidebar li {
+  padding: 0.5rem;
+  cursor: pointer;
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+  transition: background-color 0.3s;
+  color: var(--primary-color);
+}
+
+.game-sidebar li:last-child {
+  border-bottom: none;
+}
+
+.game-sidebar li:hover {
+  background-color: rgba(0,0,0,0.05);
+}
+
+.game-sidebar li.active {
+  background-color: var(--highlight-color);
+  color: #ffffff;
+}
+
+/* Game Details Container */
+.game-details {
+  flex: 1;
+}
+
+.game-details .game-card {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: calc(var(--border-radius) / 2);
+  padding: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  color: var(--primary-color);
+}
+
+.game-details .game-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.game-details .game-card-header h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  color: var(--accent-color);
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+.game-details .game-type {
+  font-size: 1.2rem;
+  color: var(--highlight-color);
+  background-color: rgba(239, 160, 11, 0.2);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  cursor: help;
+}
+
+.game-details ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.game-details li {
+  display: flex;
+  align-items: center;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.game-details li:last-child {
+  border-bottom: none;
+}
+
+/* My Team Highlight in Leaderboard */
+.my-team {
+  background-color: rgba(239, 160, 11, 0.2);
+  border-radius: 4px;
+  padding: 0.2rem;
+}
+
+/* Ranking, Flags, and Score in Leaderboard */
+.team-rank {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--highlight-color);
+  margin-right: 0.2rem;
+}
+
+.team-flag {
+  width: 25px;
+  height: 25px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 0.2rem;
+  border: 2px solid var(--accent-color);
+}
+
+.team-name {
+  font-weight: bold;
+  color: var(--primary-color);
+  margin-right: 0.2rem;
+}
+
+.team-score {
+  font-weight: 600;
+  color: var(--tertiary-color);
+}
+
+/* Color-code top 3 ranks */
+.game-details li:nth-child(1) .team-rank {
+  color: gold;
+  font-weight: bold;
+}
+.game-details li:nth-child(2) .team-rank {
+  color: silver;
+  font-weight: bold;
+}
+.game-details li:nth-child(3) .team-rank {
+  color: #cd7f32;
+  font-weight: bold;
+}
+
+/* ========================
+   RESPONSIVE ADJUSTMENTS
+   ======================== */
+
+/* Tablets */
+@media (max-width: 768px) {
+  .dashboard-content {
+    max-width: 100%;
   }
-  
+  .sidebar-container {
+    flex-direction: column;
+  }
+  .game-sidebar {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  .game-details {
+    width: 100%;
+  }
+  .games-list {
+    grid-template-columns: 1fr;
+  }
+  .game-card-header h3 {
+    font-size: 1.1rem;
+  }
+  .team-flag {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Mobile Phones */
+@media (max-width: 480px) {
+  .dashboard-wrapper {
+    padding: 0.3rem 0.5rem;
+  }
+  .tabs button {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+  }
+  .dashboard-content {
+    max-width: 100%;
+  }
+  .sidebar-container {
+    flex-direction: column;
+  }
+  .game-sidebar, .game-details {
+    width: 100%;
+  }
+  .game-card, .other-teams-section {
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .game-card h3 {
+    font-size: 1rem;
+  }
+  .game-type {
+    font-size: 1rem;
+  }
+  .summary-badge {
+    font-size: 0.9rem;
+    padding: 0.2rem 0.4rem;
+  }
+  .team-rank, .team-name, .team-score {
+    font-size: 0.9rem;
+  }
+}
+.details-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 1000;
+}
+
+
+.details-modal .modal-content {
+  background: var(--secondary-color);
+  color: var(--primary-color);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Optional: Style the Close button similar to your Game Runner modal */
+.details-modal .modal-content button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background: var(--highlight-color);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.details-modal .modal-content button:hover {
+  background-color: var(--tertiary-color);
+  color: #ffffff;
+}

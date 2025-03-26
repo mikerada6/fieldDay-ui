@@ -1,5 +1,127 @@
-<div class="dashboard">
-    <h2>Team Captain Dashboard</h2>
-    <p>Welcome, Team Captain!</p>
+<div class="dashboard-wrapper">
+  <header class="dashboard-header">
+    <div class="dashboard-header-content">
+      <img *ngIf="currentTeamFlag" [src]="'/assets/flags/' + currentTeamFlag" alt="{{ currentTeamName }} Flag" class="team-header-flag">
+      <h1>Welcome, Captain {{ currentCaptainName }} of Team {{ currentTeamName }}</h1>
+    </div>
+    <div class="tabs">
+      <button [class.active]="activeTab === 'my-games'" (click)="setActiveTab('my-games')">My Games</button>
+      <button [class.active]="activeTab === 'other-teams'" (click)="setActiveTab('other-teams')">Leaderboard</button>
+    </div>
+  </header>
+
+  <!-- Loading Screen -->
+  <div *ngIf="loading" class="loading-screen">
+    <p>Loading dashboard data...</p>
   </div>
-  
+
+  <!-- Error Screen -->
+  <div *ngIf="!loading && errorMessage" class="error-screen">
+    <p>Error: {{ errorMessage }}</p>
+    <button (click)="loadDashboardData()">Retry</button>
+  </div>
+
+  <!-- Main Content -->
+  <div *ngIf="!loading && !errorMessage" class="dashboard-content">
+    <!-- My Games Tab -->
+    <section *ngIf="activeTab === 'my-games'" class="my-games-section">
+      <h2>My Games</h2>
+      <div class="my-games-summary">
+    <span class="summary-badge">
+      Games Played: {{ completedGamesCount }} / {{ games.length }}
+    </span>
+      </div>
+      <div class="games-list">
+        <div *ngFor="let game of games; let i = index"
+             class="game-card game-hover-animation"
+             [ngClass]="{'completed-game': hasValidScore(game), 'incomplete-game': !hasValidScore(game)}">
+          <div class="game-card-header">
+            <h3>{{ game.game.name }}</h3>
+            <!-- Clickable game type badge -->
+            <div class="game-type" (click)="toggleGameDetails(game)" title="Click for game details">
+          <span *ngIf="game.game.type.toLowerCase() === 'time'">
+            {{ game.game.highScoreWins ? '⏱️⬆️' : '⏱️⬇️' }}
+          </span>
+              <span *ngIf="game.game.type.toLowerCase() === 'points'">
+            {{ game.game.highScoreWins ? '🏆⬆️' : '🏆⬇️' }}
+          </span>
+            </div>
+          </div>
+          <p><strong>Your Score:</strong> {{ getMyTeamScore(game) }}
+            <span *ngIf="hasValidScore(game)" class="checkmark-icon" title="Game Completed">✔️</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Game Details Modal -->
+    <div class="details-modal" *ngIf="showGameDetailsModal">
+      <div class="modal-content">
+        <h2>{{ selectedGameForDetails?.game.name }} Details</h2>
+        <p *ngIf="selectedGameForDetails?.game.objective">
+          <strong>Objective:</strong> {{ selectedGameForDetails?.game.objective }}
+        </p>
+        <p>
+          <strong>Game Type:</strong>
+          <span *ngIf="selectedGameForDetails?.game.type.toLowerCase() === 'time'">
+        Time Game – {{ selectedGameForDetails?.game.highScoreWins ? 'Higher Time Wins' : 'Lower Time Wins' }}
+      </span>
+          <span *ngIf="selectedGameForDetails?.game.type.toLowerCase() === 'points'">
+        Points Game – {{ selectedGameForDetails?.game.highScoreWins ? 'Higher Score Wins' : 'Lower Score Wins' }}
+      </span>
+        </p>
+        <button (click)="closeGameDetailsModal()">Close</button>
+      </div>
+    </div>
+
+
+
+    <!-- Leaderboard Tab -->
+    <section *ngIf="activeTab === 'other-teams'" class="other-teams-section">
+      <h2>Leaderboard</h2>
+      <div *ngIf="games.length > 0; else noGame" class="sidebar-container">
+        <!-- Sidebar with list of games -->
+        <aside class="game-sidebar">
+          <ul>
+            <li *ngFor="let game of games; let i = index"
+                [class.active]="selectedGameIndex === i"
+                (click)="selectedGameIndex = i">
+              {{ game.game.name }}
+            </li>
+          </ul>
+        </aside>
+
+        <!-- Game Details for the selected game -->
+        <div class="game-details">
+          <div class="game-card" *ngIf="games[selectedGameIndex] as game">
+            <div class="game-card-header">
+              <h3>{{ game.game.name }}</h3>
+              <div class="game-type">
+                <span *ngIf="game.game.type.toLowerCase() === 'time'">
+                  {{ game.game.highScoreWins ? '⏱️⬆️' : '⏱️⬇️' }}
+                </span>
+                <span *ngIf="game.game.type.toLowerCase() === 'points'">
+                  {{ game.game.highScoreWins ? '🏆⬆️' : '🏆⬇️' }}
+                </span>
+              </div>
+            </div>
+            <ul>
+              <li *ngFor="let team of getLeaderboardTeams(game); let i = index"
+                  [class.my-team]="team.teamId === game.myTeamId">
+                <span class="team-rank">{{ i + 1 }}.</span>
+                <img [src]="'/assets/flags/' + team.flagSvgFilename" alt="{{ team.teamName }} flag" class="team-flag">
+                <span class="team-name">{{ team.teamName }}:</span>
+                <span class="team-score">
+                  {{ team.score == null ? (game.game.type.toLowerCase() === 'time' ? '--:--.---' : 'N/A') : (game.game.type.toLowerCase() === 'time' ? formatTime(team.score) : team.score) }}
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <ng-template #noGame>
+        <p>No games available.</p>
+      </ng-template>
+    </section>
+  </div>
+</div>
